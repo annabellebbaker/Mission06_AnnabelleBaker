@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Movies // don't need the DateMe.Models because it's inferred that the program can see that
+
+<h1>Joel Hilton's Film Collection</h1>
+
+<form method="post">
+    <!-- Category -->
+    <label asp-for="Category">Category:</label>
+    <input asp-for="Category" required />
+    <br />
+    
+    <!-- Title -->
+    <label asp-for="Title">Title:</label>
+    <input asp-for="Title" required/>
+    <br />
+   
+    <!-- Year Scroll -->
+    <label asp-for="Year">Year:</label>
+    <input asp-for="Year" required/>
+    <br />
+    
+    <!-- Director Name -->
+    <label asp-for="Director">Director:</label>
+    <input asp-for="Director" required/>
+    <br />
+
+    <!-- Rating Dropdown -->
+    <label asp-for="Rating">Select Movie Rating:</label>
+    <select asp-for="Rating" class="form-select" required>
+        <option value="">-- Select a Rating --</option>
+        <option value="G">G</option>
+        <option value="PG">PG</option>
+        <option value="PG-13">PG-13</option>
+        <option value="R">R</option>
+    </select>
+    <br />
+    
+    <!-- Edited boolean -->
+    <label asp-for="Edited">Edited Version?</label>
+    <select asp-for="Edited">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <br />
+
+    <!-- Lent to -->
+    <label asp-for="LentTo">Lent To:</label>
+    <input asp-for="LentTo" />
+    <br />
+
+    <!-- Extra notes -->
+    <label asp-for="Notes">Notes:</label>
+    <input asp-for="Notes" maxlength="25" />
+    <br />
+
+
+    <button type="submit">Submit Movie</button>
+</form>

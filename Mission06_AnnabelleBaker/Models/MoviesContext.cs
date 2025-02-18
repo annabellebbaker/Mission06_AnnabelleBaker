@@ -10,6 +10,7 @@ namespace Mission06_AnnabelleBaker.Models
             }
 
             public DbSet<Movies> Movies { get; set; } // create database set, Movies is table name
+        // this is commenting
         }
 }
 

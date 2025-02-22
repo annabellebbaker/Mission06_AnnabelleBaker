@@ -15,9 +15,10 @@ namespace Mission06_AnnabelleBaker.Models
 
             public DbSet<Category> Categories { get; set; } // create database set, Categories is table name  
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            protected override void OnModelCreating(ModelBuilder modelBuilder) // seed data
             {
                 modelBuilder.Entity<Category>().HasData(
+                    
                     new Category { CategoryId = 1, CategoryName = "Miscellaneous" },
                     new Category { CategoryId = 2, CategoryName = "Drama" },
                     new Category { CategoryId = 3, CategoryName = "Television" },

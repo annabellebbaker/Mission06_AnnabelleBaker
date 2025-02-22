@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission06_AnnabelleBaker.Models;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -14,10 +15,12 @@ namespace Mission06_AnnabelleBaker.Controllers
         {
             _context = temp; // import information based on context, add
         }
+
         public IActionResult Index() // home page
         {
             return View();
         }
+
 
         public IActionResult GetToKnowJoel() // get to know Joel page
         {
@@ -27,26 +30,36 @@ namespace Mission06_AnnabelleBaker.Controllers
         [HttpGet]
         public IActionResult EnterMovies() // enter movies page (Joel's Film Collection)
         {
-            ViewBag.Category = _context.Categories;
+            ViewBag.Category = _context.Categories.ToList();
 
-            return View("EnterMovies", new Movie());
+            return View(new Movie());
         }
 
         [HttpPost]
         public IActionResult EnterMovies(Movie response)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false) // invalid input
             {
-                _context.Movies.Add(response);
-                _context.SaveChanges();
-                ViewBag.Category = _context.Categories;
-                return View("Confirmation", response);
+                ViewBag.Categories = _context.Categories.ToList();
+                return View(response); 
             }
             else
             {
-                ViewBag.Category = _context.Categories;
-                return View(response);
+                _context.Movies.Add(response);
+                _context.SaveChanges();
+                return View("Confirmation", response);
             }
+        }
+
+
+        public IActionResult MovieList() // Movie List database page
+        {
+            // Linq
+            var movies = _context.Movies
+                .Include(m => m.Category)
+                .ToList();
+
+            return View(movies);
         }
 
         [HttpGet]
@@ -73,7 +86,6 @@ namespace Mission06_AnnabelleBaker.Controllers
         }
 
         [HttpGet]
-
         public IActionResult Delete(int id)
         {
             var recordToDelete = _context.Movies

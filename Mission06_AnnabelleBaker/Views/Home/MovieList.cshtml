@@ -36,7 +36,12 @@
                 <td>@x.CopiedToPlex</td>
                 <td>@x.Notes</td>
 
-                <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.MovieId">Edit</a></td>
+                <td><!-- EDIT button classiness, better than the blue before -->
+                    <a class="btn" style="background-color: #008F4A; color: white;"
+                       asp-controller="Home" asp-action="Edit" asp-route-id="@x.MovieId">
+                        Edit
+                    </a>
+                </td>
                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.MovieId">Delete</a></td>
             </tr>
         </tbody>

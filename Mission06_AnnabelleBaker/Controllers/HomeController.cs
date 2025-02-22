@@ -71,8 +71,12 @@ namespace Mission06_AnnabelleBaker.Controllers
         {
             var recordToEdit = _context.Movies.Find(id);
 
-            ViewBag.Categories = _context.Categories.ToList(); // Get the categories from the database
+            ViewBag.Categories = _context.Categories
+                .ToList();
+            
             return View("EnterMovies", recordToEdit);
+
+            // couldn't get the code below to work but was a backup option
             //var recordToEdit = _context.Movies
             //    .Single(x => x.MovieId == id); // going through route and can load up the correct record, grabs ONE single record
 
@@ -97,7 +101,7 @@ namespace Mission06_AnnabelleBaker.Controllers
 
             // Re-populate categories if form validation fails
             ViewBag.Categories = _context.Categories.ToList();
-            return View(updatedInfo);
+            return View("MovieList", updatedInfo);
         }
 
         [HttpGet]

@@ -10,20 +10,23 @@
 
 <form method="post">
     <input type="hidden" asp-for="MovieId" />
-    <!-- Category -->
-    <select asp-for="Category">
-        <option value="">Select a Category</option>
-        @foreach (Category c in ViewBag.Categories)
-        {
-            <option value="@c.CategoryId">@c.CategoryName</option>
-        }
-    </select>
-    <br />
-    
     <!-- Title -->
-    <label asp-for="Title">Title:</label>
-    <input asp-for="Title" required/>
-    <br />
+    <div>
+        <label asp-for="Title">Title:</label>
+        <input asp-for="Title" required />
+    </div>
+    <div>
+
+    <!-- Category ViewBag -->
+        <label asp-for="CategoryId">Category:</label>
+        <select asp-for="CategoryId">
+            <option value="">Select Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryId">@c.CategoryName</option>
+            }
+        </select>
+    </div>
    
     <!-- Year Scroll -->
     <label asp-for="Year">Year:</label>
@@ -72,8 +75,12 @@
     <input asp-for="Notes" maxlength="25" />
     <br />
 
+    <!-- nicer submit button -->
 
-    <button type="submit">Submit Movie</button>
+    <button type="submit" style="background-color: #00225C; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        Submit Movie
+    </button>
+
 
     <div asp-validation-summary="All"></div>
 </form>

@@ -4,7 +4,7 @@ using Mission06_AnnabelleBaker.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext with SQLite
-builder.Services.AddDbContext<MoviesContext>(options => {
+builder.Services.AddDbContext<MovieContext>(options => {
     options.UseSqlite(builder.Configuration["ConnectionStrings:MoviesConnection"]);
 });
 

@@ -4,7 +4,7 @@
 @{
 }
 
-@model Movies // don't need the DateMe.Models because it's inferred that the program can see that
+@model Movie // don't need the DateMe.Models because it's inferred that the program can see that
 
 <h1>Joel Hilton's Film Collection</h1>
 
@@ -43,6 +43,14 @@
     <!-- Edited boolean -->
     <label asp-for="Edited">Edited Version?</label>
     <select asp-for="Edited">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <br />
+
+    <!-- CopiedToPlex boolean -->
+    <label asp-for="CopiedToPlex">Copied To Plex</label>
+    <select asp-for="CopiedToPlex">
         <option value="true">Yes</option>
         <option value="false">No</option>
     </select>

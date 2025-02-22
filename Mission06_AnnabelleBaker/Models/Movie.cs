@@ -26,10 +26,11 @@ namespace Mission06_AnnabelleBaker.Models
         [Required(ErrorMessage = "Please indicate whether the movie should be edited.")]
         public bool Edited { get; set; } // No need for required since bool is non-nullable
         
+        public string? LentTo { get; set; } // Nullable field
+
         [Required(ErrorMessage = "Please indicate whether the movie was copied to plex.")]
         public bool CopiedToPlex { get; set; } // no need for required since bool is non-nullable
-        public string? LentTo { get; set; } // Nullable field
-        
+
         [MaxLength(25)]
         public string? Notes { get; set; } // Nullable field
     }

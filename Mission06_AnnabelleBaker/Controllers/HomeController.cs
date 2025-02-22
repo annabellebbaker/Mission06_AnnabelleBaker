@@ -30,7 +30,9 @@ namespace Mission06_AnnabelleBaker.Controllers
         [HttpGet]
         public IActionResult EnterMovies() // enter movies page (Joel's Film Collection)
         {
-            ViewBag.Category = _context.Categories.ToList();
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList();
 
             return View(new Movie());
         }
@@ -57,6 +59,7 @@ namespace Mission06_AnnabelleBaker.Controllers
             // Linq
             var movies = _context.Movies
                 .Include(m => m.Category)
+                .OrderBy(m => m.Title)
                 .ToList();
 
             return View(movies);
@@ -66,23 +69,35 @@ namespace Mission06_AnnabelleBaker.Controllers
         // this is going to be a reference to the database and CRUD functionality
         public IActionResult Edit(int id)
         {
-            var recordToEdit = _context.Movies
-                .Single(x => x.MovieId == id); // going through route and can load up the correct record, grabs ONE single record
+            var recordToEdit = _context.Movies.Find(id);
 
-            ViewBag.Category = _context.Categories
-                .OrderBy(x => x.CategoryName).ToList(); // store somewhere
+            ViewBag.Categories = _context.Categories.ToList(); // Get the categories from the database
+            return View("EnterMovies", recordToEdit);
+            //var recordToEdit = _context.Movies
+            //    .Single(x => x.MovieId == id); // going through route and can load up the correct record, grabs ONE single record
 
-            return View("EnterMovies", recordToEdit); // go back to dating application to edit
-            // get action to form and access database info
+            //ViewBag.Categories = _context.Categories
+            //    .OrderBy(x => x.CategoryName)
+            //    .ToList(); // store somewhere
+
+            //return View("EnterMovies", recordToEdit); // go back to dating application to edit
+            //// get action to form and access database info
         }
 
         [HttpPost]
         public IActionResult Edit(Movie updatedInfo) // returns ALL the information about the record
         {
-            _context.Update(updatedInfo);
-            _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _context.Movies.Update(updatedInfo);
+                _context.SaveChanges();
+                
+                return RedirectToAction("MovieList");
+            }
 
-            return RedirectToAction("MovieList");
+            // Re-populate categories if form validation fails
+            ViewBag.Categories = _context.Categories.ToList();
+            return View(updatedInfo);
         }
 
         [HttpGet]
@@ -91,7 +106,7 @@ namespace Mission06_AnnabelleBaker.Controllers
             var recordToDelete = _context.Movies
                 .Single(x => x.MovieId == id);
 
-            return View(recordToDelete); // shows us the record to delete on the button
+            return View("DeleteMovie", recordToDelete); // shows us the record to delete on the button
 
         }
 
@@ -102,8 +117,13 @@ namespace Mission06_AnnabelleBaker.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("MovieList");
-
-
         }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
     }
 }
